@@ -19,14 +19,12 @@
       community.general.pacman:
         name: ggml-cuda
         state: present
-        reason: dependency
       when: llamacpp_backend_cuda
 
     - name: LLAMACPP install hip
       community.general.pacman:
         name: ggml-hip
         state: present
-        reason: dependency
       when: llamacpp_backend_hip
 
     - name: LLAMACPP install openvino
@@ -35,7 +33,6 @@
           - intel-compute-runtime
           - ggml-openvino
         state: present
-        reason: dependency
       when: llamacpp_backend_openvino
 
     - name: LLAMACPP install sycl
