@@ -1,0 +1,61 @@
+---
+
+- name: LLAMACPP
+  become: true
+  tags:
+    - llm
+    - llamacpp
+  when: llamacpp_active
+  block:
+
+    - name: LLAMACPP install
+      community.general.pacman:
+        name:
+          - llama-cpp
+          - clinfo
+        state: present
+
+    - name: LLAMACPP install cuda
+      community.general.pacman:
+        name: ggml-cuda
+        state: present
+        reason: dependency
+      when: llamacpp_backend_cuda
+
+    - name: LLAMACPP install hip
+      community.general.pacman:
+        name: ggml-hip
+        state: present
+        reason: dependency
+      when: llamacpp_backend_hip
+
+    - name: LLAMACPP install openvino
+      community.general.pacman:
+        name:
+          - intel-compute-runtime
+          - ggml-openvino
+        state: present
+        reason: dependency
+      when: llamacpp_backend_openvino
+
+    - name: LLAMACPP install sycl
+      community.general.pacman:
+        name:
+          - intel-compute-runtime
+          - ggml-sycl
+        state: present
+      when: llamacpp_backend_sycl
+
+    - name: LLAMACPP install vulkan
+      community.general.pacman:
+        name: ggml-vulkan
+        state: present
+      when: llamacpp_backend_vulkan
+
+    - name: LLAMACPP set ANV_SYS_MEM_LIMIT
+      ansible.builtin.lineinfile:
+        path: /etc/security/pam_env.conf
+        state: present
+        line: ANV_SYS_MEM_LIMIT          DEFAULT={{ llamacpp_intel_anv_sys_mem_limit }}
+        search_string: ^ANV_SYS_MEM_LIMIT
+      when: llamacpp_intel

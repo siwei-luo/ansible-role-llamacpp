@@ -1,0 +1,12 @@
+---
+
+llamacpp_active: true
+
+llamacpp_backend_cuda: false
+llamacpp_backend_hip: false
+llamacpp_backend_openvino: false
+llamacpp_backend_sycl: false
+llamacpp_backend_vulkan: true
+
+llamacpp_intel: false
+llamacpp_intel_anv_sys_mem_limit: 80
