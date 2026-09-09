@@ -10,3 +10,7 @@ llamacpp_backend_vulkan: true
 
 llamacpp_intel: false
 llamacpp_intel_anv_sys_mem_limit: 80
+
+llamacpp_rocm_enable: false
+llamacpp_rocm_variant: gfx1150
+llamacpp_rocm_version: b1326
