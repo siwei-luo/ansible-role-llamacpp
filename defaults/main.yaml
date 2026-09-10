@@ -8,5 +8,7 @@ llamacpp_backend_openvino: false
 llamacpp_backend_sycl: false
 llamacpp_backend_vulkan: true
 
-llamacpp_intel: false
+llamacpp_gpu_amd: false
+llamacpp_gpu_intel: false
+llamacpp_gpu_nvidia: false
 llamacpp_intel_anv_sys_mem_limit: 80

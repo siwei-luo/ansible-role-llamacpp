@@ -19,13 +19,17 @@
       community.general.pacman:
         name: ggml-cuda
         state: present
-      when: llamacpp_backend_cuda
+      when:
+        - llamacpp_backend_cuda
+        - llamacpp_gpu_nvidia
 
     - name: LLAMACPP install hip
       community.general.pacman:
         name: ggml-hip
         state: present
-      when: llamacpp_backend_hip
+      when:
+        - llamacpp_backend_hip
+        - llamacpp_gpu_amd
 
     - name: LLAMACPP install openvino
       community.general.pacman:
@@ -33,7 +37,9 @@
           - intel-compute-runtime
           - ggml-openvino
         state: present
-      when: llamacpp_backend_openvino
+      when:
+        - llamacpp_backend_openvino
+        - llamacpp_gpu_intel
 
     - name: LLAMACPP install sycl
       community.general.pacman:
@@ -41,7 +47,9 @@
           - intel-compute-runtime
           - ggml-sycl
         state: present
-      when: llamacpp_backend_sycl
+      when:
+        - llamacpp_backend_sycl
+        - llamacpp_gpu_intel
 
     - name: LLAMACPP install vulkan
       community.general.pacman:
@@ -49,10 +57,26 @@
         state: present
       when: llamacpp_backend_vulkan
 
+    - name: LLAMACPP install vulkan-radeon
+      community.general.pacman:
+        name: vulkan-radeon
+        state: present
+      when:
+        - llamacpp_backend_vulkan
+        - llamacpp_gpu_amd
+
+    - name: LLAMACPP install nvidia-utils
+      community.general.pacman:
+        name: nvidia-utils
+        state: present
+      when:
+        - llamacpp_backend_vulkan
+        - llamacpp_gpu_nvidia
+
     - name: LLAMACPP set ANV_SYS_MEM_LIMIT
       ansible.builtin.lineinfile:
         path: /etc/security/pam_env.conf
         state: present
         line: ANV_SYS_MEM_LIMIT          DEFAULT={{ llamacpp_intel_anv_sys_mem_limit }}
         search_string: ^ANV_SYS_MEM_LIMIT
-      when: llamacpp_intel
+      when: llamacpp_gpu_intel
