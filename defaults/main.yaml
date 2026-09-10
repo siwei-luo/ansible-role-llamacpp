@@ -2,6 +2,7 @@
 
 llamacpp_active: true
 
+llamacpp_backend_blas: false
 llamacpp_backend_cuda: false
 llamacpp_backend_hip: false
 llamacpp_backend_openvino: false

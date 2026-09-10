@@ -15,6 +15,12 @@
           - clinfo
         state: present
 
+    - name: LLAMACPP install blas
+      community.general.pacman:
+        name: ggml-blas
+        state: present
+      when: llamacpp_backend_blas
+
     - name: LLAMACPP install cuda
       community.general.pacman:
         name: ggml-cuda
